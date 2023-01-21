@@ -105,22 +105,21 @@ def get_coordinates(board):
 
 def convert_crd(crd):
     dict = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4,
-            "F": 5, "G": 6, "H": 7, "I": 8, "J": 9, "H": 10}
+            "F": 5, "G": 6, "H": 7, "I": 8, "J": 9, "K": 10}
     return (dict.get(crd[0]), crd[1])
+
+
+def get_welcome_message():
+    print("Welcome to the Memory Game!")
 
 
 def main():
     height = get_level()
     board = generate_board(height, width)
-    print(random_char(height, width))
-    print("tablica wygenerowan - DONE")
-    print(generate_board(height, width))
-    print("tablica display - TO DO")
+    get_welcome_message()
     display_board(board)
     display_board(get_hash_board(height, width))
     get_coordinates(board)
-    # print(len(generate_board(height, width)))
-    # print(alphabet[0:5])
 
 
 if __name__ == "__main__":
