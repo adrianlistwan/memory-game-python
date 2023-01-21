@@ -37,11 +37,31 @@ def generate_board(height, width):
 
     return board
 
+def display_board(board):
+    num_rows = len(board)
+    num_cols = len(board[0])
+    # display_main_board
+    print()
+    print("      ", end="")
+    for i in range(num_cols):
+        print(chr(ord('A') + i) + "   ", end="")   
+    print()
+    
+    print("     " + "-"*(num_cols*4 - 1))
+    # display_rows
+    for i in range(num_rows):
+        print(i+1, end="   | ")
+        for j in range(num_cols):
+            print(board[i][j], end=" | ")
+        print()
+    print()
+    
 def main():
     print(random_char(height,width))
-    print("tablica poniżej")
+    print("tablica wygenerowan - DONE")
     print(generate_board(height,width))
-
+    print("tablica display - TO DO")
+    display_board(generate_board(height,width))
 
 if __name__ == "__main__":
     main()
