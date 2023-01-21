@@ -2,16 +2,18 @@ import os
 import random
 
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-height = 4
+# height = 4
 width = 5
-    
+
+
 def random_char(height, width):
-    
-    temp_list = [x for x in alphabet if alphabet.index(x) < int((height * width)/2)]
+
+    temp_list = [x for x in alphabet if alphabet.index(
+        x) < int((height * width)/2)]
     # duplicate list
     temp_list2 = temp_list * 2
     random.shuffle(temp_list2)
-    
+
     return temp_list2
 
 
@@ -21,8 +23,9 @@ def console_clear():
 
 # generate_board(height, width)
 # height -> rows
-# width -> columns 
- 
+# width -> columns
+
+
 def generate_board(height, width):
     board = []
     temp_alphabet = random_char(height, width)
@@ -32,10 +35,11 @@ def generate_board(height, width):
         counter = i*width
         for j in range(width):
             row.append(temp_alphabet[counter])
-            counter += 1          
+            counter += 1
         board.append(row)
 
     return board
+
 
 def display_board(board):
     num_rows = len(board)
@@ -44,9 +48,9 @@ def display_board(board):
     print()
     print("      ", end="")
     for i in range(num_cols):
-        print(chr(ord('A') + i) + "   ", end="")   
+        print(chr(ord('A') + i) + "   ", end="")
     print()
-    
+
     print("     " + "-"*(num_cols*4 - 1))
     # display_rows
     for i in range(num_rows):
@@ -55,18 +59,74 @@ def display_board(board):
             print(board[i][j], end=" | ")
         print()
     print()
-    
+
+
+def get_hash_board(height, width):
+    hash_board = []
+    for i in range(height):
+        hash_board.append([])
+        for j in range(width):
+            hash_board[i].append("#")
+    print(hash_board)
+    return hash_board
+
+
+def get_level():
+    print('''
+           Select the difficulty level:
+           Easy (5x4)   - 1
+           Medium (5x6) - 2
+           Hard (5x10)  - 3
+           ''')
+    while True:
+        level = input("Choose option [1-3]")
+        levels = [4, 6, 10]
+        if int(level) not in [1, 2, 3]:
+            print("condition = ", level not in [1, 2, 3])
+            print("level = ", level)
+            print("There is no such level")
+            continue
+        break
+    height = levels[int(level)-1]
+    return height
+
+
+def get_coordinates(board):
+    crd = input("Enter coordinates")
+    crd_alpha, crd_num = crd
+    crd_num = int(crd_num)
+    if len(crd) != 2 or not crd_alpha.isalpha() or crd_num.isnumeric():
+        print("Please enter valid data")
+    elif crd_num > len(board) or crd_alpha in alphabet[0:5]:
+        print("Data out of range")
+    else:
+        return [crd_alpha, crd_num-1]
+
+
+def convert_crd(crd):
+    dict = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4,
+            "F": 5, "G": 6, "H": 7, "I": 8, "J": 9, "H": 10}
+    return (dict.get(crd[0]), crd[1])
+
+
 def main():
-    print(random_char(height,width))
+    height = get_level()
+    board = generate_board(height, width)
+    print(random_char(height, width))
     print("tablica wygenerowan - DONE")
-    print(generate_board(height,width))
+    print(generate_board(height, width))
     print("tablica display - TO DO")
-    display_board(generate_board(height,width))
+    display_board(board)
+    display_board(get_hash_board(height, width))
+    get_coordinates(board)
+    # print(len(generate_board(height, width)))
+    # print(alphabet[0:5])
+
 
 if __name__ == "__main__":
     main()
 
 # uwagi Sławka
-# tablica 3x4 -> 12 komórek -> 6 liter // tworzymy generate board pomocnicza lista / wycinamy ile liteer 
-# uzupełnianie 
-# pop 
+# tablica 3x4 -> 12 komórek -> 6 liter // tworzymy generate board pomocnicza lista / wycinamy ile liteer
+# uzupełnianie
+# pop
