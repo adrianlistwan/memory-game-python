@@ -71,6 +71,11 @@ def get_hash_board(height, width):
     return hash_board
 
 
+def crd_in_hash_board(hash_board, board, crd):
+    x, y = crd
+    hash_board[x][y] = board[x][y]
+
+
 def get_level():
     print('''
            Select the difficulty level:
@@ -94,32 +99,37 @@ def get_level():
 def get_coordinates(board):
     crd = input("Enter coordinates")
     crd_alpha, crd_num = crd
-    crd_num = int(crd_num)
-    if len(crd) != 2 or not crd_alpha.isalpha() or crd_num.isnumeric():
+    # crd_num = int(crd_num)
+    if len(crd) != 2 or not crd_alpha.isalpha() or not crd_num.isnumeric():
+        print(len(crd) != 2)
+        print(not crd_alpha.isalpha())
+        print(crd_num.isnumeric())
         print("Please enter valid data")
-    elif crd_num > len(board) or crd_alpha in alphabet[0:5]:
+    elif int(crd_num) > len(board) or crd_alpha not in alphabet[0:5]:
         print("Data out of range")
     else:
-        return [crd_alpha, crd_num-1]
+        return [crd_alpha, int(crd_num)-1]
 
 
 def convert_crd(crd):
     dict = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4,
             "F": 5, "G": 6, "H": 7, "I": 8, "J": 9, "K": 10}
-    return (dict.get(crd[0]), crd[1])
+    return [dict.get(crd[0]), crd[1]]
 
 
-def get_welcome_message():
-    print("Welcome to the Memory Game!")
+# def get_welcome_message():
+#     print("Welcome to the Memory Game!" / n)
 
 
 def main():
     height = get_level()
     board = generate_board(height, width)
-    get_welcome_message()
+    hash_board = get_hash_board(height, width)
     display_board(board)
     display_board(get_hash_board(height, width))
-    get_coordinates(board)
+    crd = convert_crd(get_coordinates(board))
+    crd_in_hash_board(hash_board, board, crd)
+    display_board(hash_board)
 
 
 if __name__ == "__main__":
